@@ -1,0 +1,57 @@
+html {
+    height: auto;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    animation-name:example;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    background-size: cover;
+    height:100vh;
+    /* overflow-y: hidden; */
+}
+@keyframes example {
+    0%   {background-color: red;}
+    50%  {background-color: yellow;}
+    100% {background-color: red;}
+  }
+
+#m-chat {
+    background-color: aliceblue;
+    margin: 4rem 16rem 0rem;
+    border: 1px black solid;
+}
+
+#chatroom {
+    width: 100%;
+    height: 800px;
+    overflow-y: scroll;
+    text-align: justify;
+}
+
+p {
+    padding: 5px;
+    border: 1px black solid;
+    border-radius: 10px;
+    width: 20%;
+    background-color: #EABD54;
+}
+
+#chat-window {
+    margin-left: 8px;
+    display: flex;
+    /* x` */
+}
+
+#message {
+    width: 100%;
+    height: 2rem;
+    flex-grow: 8;
+}
+
+#send {
+    flex-grow: 2;
+}

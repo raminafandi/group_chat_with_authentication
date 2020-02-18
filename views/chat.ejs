@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="./css/chat.css">
+<div id="m-chat">
+  <input type="text" name="username" id="username" value="" hidden>
+
+  <div id="chat-window">
+    <div id="chatroom">
+      <div class="oldchats">
+        <% oldChats.forEach(function(messageBlock){ %>
+        <p><strong> <%=messageBlock.username%> : </strong><%= messageBlock.message%></p>
+        <% }); %>
+      </div>
+
+      <div id="output"></div>
+      <div id="feedback"></div>
+    </div>
+  </div>
+  <section id="input_zone">
+    <input type="text" name="message" id="message">
+    <button id="send">Send</button>
+  </section>
+</div>
+<script>
+  window.onload = function () {
+    var objDiv = document.getElementById("chatroom");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
+  //Make connection
+  var socket = io.connect('http://localhost:5000/');
+
+  //Query DOM
+
+  var message = document.getElementById('message');
+  var handle = document.getElementById('handle');
+  var btn = document.getElementById('send');
+  var output = document.getElementById('output');
+  var feedback = document.getElementById('feedback');
+  var username = '<%= name %>';
+
+  //Emit events
+  btn.addEventListener('click', () => {
+    socket.emit('chat', {
+      message: message.value,
+      username: username
+    });
+    message.value = "";
+  });
+
+  message.addEventListener('keypress', () => {
+    socket.emit('typing', username.value);
+  });
+
+  //Listen for events
+  socket.on('chat', data => {
+    feedback.innerHTML = '';
+    output.innerHTML +=
+      '<p><strong>' + data.username + ': </strong>' + data.message + '</p>';
+  });
+
+  socket.on('typing', data => {
+    feedback.innerHTML = '<p><em>' + data + 'is typing a message...<em/></p>';
+  });
+</script>
