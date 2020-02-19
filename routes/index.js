@@ -13,6 +13,10 @@ router.get('/', (req, res) => {
     res.render('welcome');
 });
 
+router.get('/mindmap', ensureAuthenticated ,(req,res)=>{
+    res.render('mindmap');
+})
+
 //chat page
 router.get('/chat', ensureAuthenticated, async (req, res) => {
     
