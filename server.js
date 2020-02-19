@@ -46,6 +46,7 @@ app.use(
   })
 );
 
+
 // Express session
 app.use(
   session({
@@ -62,6 +63,12 @@ app.use(passport.session());
 //Connect Flash
 app.use(flash());
 
+//User Authenticated or not
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next();
+});
+
 //Socket setup
 var io = socket(server);
 // MongoClient.connect(db, function(err, db) {
@@ -69,10 +76,10 @@ var io = socket(server);
 //   console.log(messagescollection);
 // });
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
   console.log('made socket connection.', socket.id);
 
-  socket.on('disconnect', function() {
+  socket.on('disconnect', function () {
     console.log('user disconnected');
   });
 
@@ -91,7 +98,7 @@ io.on('connection', function(socket) {
 });
 
 // Global variables
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');

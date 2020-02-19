@@ -1,57 +1,82 @@
-html {
-    height: auto;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+body {
+    font-family: 'Nunito';
+    background-image: linear-gradient(to bottom right, #6D9DC5, #44D7A8);
+    background-repeat: inherit;
 }
 
-body {
-    animation-name:example;
-    animation-duration: 6s;
-    animation-iteration-count: infinite;
-    background-size: cover;
-    height:100vh;
-    /* overflow-y: hidden; */
+h2 {
+    font-size: 18px;
+    padding: 10px 20px;
+    color: #575ed8;
 }
-@keyframes example {
-    0%   {background-color: red;}
-    50%  {background-color: yellow;}
-    100% {background-color: red;}
-  }
 
 #m-chat {
-    background-color: aliceblue;
-    margin: 4rem 16rem 0rem;
-    border: 1px black solid;
-}
-
-#chatroom {
-    width: 100%;
-    height: 800px;
-    overflow-y: scroll;
-    text-align: justify;
-}
-
-p {
-    padding: 5px;
-    border: 1px black solid;
-    border-radius: 10px;
-    width: 20%;
-    background-color: #EABD54;
+    max-width: 600px;
+    margin: 30px auto;
+    border: 1px solid #ddd;
+    /* box-shadow: 20px 20px 50px 15px grey; */
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 10px 10px 10px grey;
 }
 
 #chat-window {
-    margin-left: 8px;
-    display: flex;
-    /* x` */
+    max-height: 80vh;
+    overflow: auto;
+    background: #f9f9f9;
 }
 
-#message {
+
+p {
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+}
+
+/* #output p {
+    padding: 14px 0px;
+    margin: 0 20px;
+    border-bottom: 1px solid #e9e9e9;
+    color: #555;
+} */
+
+#feedback p {
+    color: black;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
+
+strong {
+    color: #575ed8;
+}
+
+label {
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 20px;
+}
+
+input {
+    padding: 10px 20px;
+    box-sizing: border-box;
+    background: #eee;
+    border: 0;
+    display: block;
     width: 100%;
-    height: 2rem;
-    flex-grow: 8;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    font-family: Nunito;
+    font-size: 16px;
 }
 
-#send {
-    flex-grow: 2;
+button {
+    background: #575ed8;
+    color: #fff;
+    font-size: 18px;
+    border: 0;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 0 0 2px 2px;
 }
