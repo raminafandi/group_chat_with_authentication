@@ -15,34 +15,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/mindmap', ensureAuthenticated, async (req, res) => {
-    let mindmaps;
 
-    await Mindmap.find({user:  req.session.passport.user} , (err, allmindmap) => {
-        mindmaps = allmindmap;
-    });
-    console.log(mindmaps);
-    res.render('mindmap', {
-        mindmaps: mindmaps
-    });
-    // console.log(req.session);
+    res.render('mindmap');
 });
-
-
-router.get('/mindmap/:id' , ensureAuthenticated , async (req,res)=>{
-    const mindmapwithID=await Mindmap.findById(req.params.id);
-    res.render('mindmapid', {
-        mindmapwithID: mindmapwithID
-    });
-});
-
-// router.get('/mindmap',ensureAuthenticated,(req,res)=>{
-//     const {map_name} = req.query;
-    
-// })
 
 
 router.post('/mindmap', ensureAuthenticated, async (req, res) => {
-    const {
+    let {
         map_name,
         html
     } = req.body;
@@ -53,7 +32,8 @@ router.post('/mindmap', ensureAuthenticated, async (req, res) => {
             msg: 'Please enter all fields'
         });
     }
-
+    html = escape(html);
+    console.log(html);
     const newMindmap = new Mindmap({
         map_name: map_name,
         html: html,
@@ -62,9 +42,32 @@ router.post('/mindmap', ensureAuthenticated, async (req, res) => {
 
     // console.log(newMindmap);
     await newMindmap.save();
-    res.render('mindmap');
+    res.render('welcome');
 
 })
+
+router.get('/mindmap/open', ensureAuthenticated, async (req, res) => {
+    let mindmaps = [];
+    await Mindmap.find({
+        user: req.session.passport.user
+    }, function (err, result) {
+        mindmaps = result;
+    });
+    // console.log(mindmaps);
+
+    res.render('mindmapopen', {
+        mindmaps: mindmaps
+    });
+})
+
+router.get('/mindmap/:id', ensureAuthenticated, async (req, res) => {
+    const mindmapwithID = await Mindmap.findById(req.params.id);
+
+    res.render('mindmapid', {
+        mindmapwithID: mindmapwithID,
+
+    });
+});
 
 //chat page
 router.get('/chat', ensureAuthenticated, async (req, res) => {
