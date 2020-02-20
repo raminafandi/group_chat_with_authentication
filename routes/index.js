@@ -14,10 +14,31 @@ router.get('/', (req, res) => {
     res.render('welcome');
 });
 
-router.get('/mindmap', ensureAuthenticated, (req, res) => {
-    res.render('mindmap');
+router.get('/mindmap', ensureAuthenticated, async (req, res) => {
+    let mindmaps;
+
+    await Mindmap.find({user:  req.session.passport.user} , (err, allmindmap) => {
+        mindmaps = allmindmap;
+    });
+    console.log(mindmaps);
+    res.render('mindmap', {
+        mindmaps: mindmaps
+    });
     // console.log(req.session);
 });
+
+
+router.get('/mindmap/:id' , ensureAuthenticated , async (req,res)=>{
+    const mindmapwithID=await Mindmap.findById(req.params.id);
+    res.render('mindmapid', {
+        mindmapwithID: mindmapwithID
+    });
+});
+
+// router.get('/mindmap',ensureAuthenticated,(req,res)=>{
+//     const {map_name} = req.query;
+    
+// })
 
 
 router.post('/mindmap', ensureAuthenticated, async (req, res) => {
@@ -39,9 +60,9 @@ router.post('/mindmap', ensureAuthenticated, async (req, res) => {
         user: req.session.passport.user
     });
 
-    console.log(newMindmap);
+    // console.log(newMindmap);
     await newMindmap.save();
-    res.redirect('/mindmap');
+    res.render('mindmap');
 
 })
 
