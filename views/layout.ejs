@@ -32,39 +32,46 @@
             </ul>
         </div>
 
-        <% if (login) { %>
 
-        <div class="navbar-collapse collapse order-3 dual-collapse2">
+        <div class="navbar-collapse collapse"id="navbarNavDropdown" >
             <ul class="navbar-nav ml-auto">
+                    <% if (login) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/users/logout">Log Out</a>
                 </li>
-            </ul>
-        </div>
-        <% } else { %>
-        <div class="navbar-collapse collapse order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
+                <% } else { %>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/users/login">Log In</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/users/register">Sign Up</a>
                 </li>
+                <% } %>
+
             </ul>
         </div>
-        <% } %>
 
     </nav>
 
-
-
+    <%var dt=new Date()%>
+    <h1></h1>
     <div class="container">
         <%- body -%>
     </div>
-
+    <footer class="page-footer font-small blue pt-4">
+            <!-- Copyright -->
+   <div class="footer-copyright text-center py-2">© <%=dt.getFullYear()%> R.A.  
+      </div>
+      <!-- Copyright -->
+          </footer>
     <style>
         body {
-            background-image: linear-gradient(to right, #6D9DC5, purple);
+            background:blueviolet;
+        }
+        footer{
+            background: black;
+            color:white;
         }
     </style>
 

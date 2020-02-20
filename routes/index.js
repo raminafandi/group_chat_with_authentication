@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/mindmap', ensureAuthenticated, (req, res) => {
     res.render('mindmap');
-    console.log(req.session);
+    // console.log(req.session);
 });
 
 
