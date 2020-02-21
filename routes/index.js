@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     res.render('welcome');
 });
 
-router.get('/mindmap', ensureAuthenticated, async (req, res) => {
+router.get('/mindmap', ensureAuthenticated,  (req, res) => {
 
     res.render('mindmap');
 });
@@ -32,8 +32,9 @@ router.post('/mindmap', ensureAuthenticated, async (req, res) => {
             msg: 'Please enter all fields'
         });
     }
-    html = escape(html);
+ 
     console.log(html);
+    html = escape(html);
     const newMindmap = new Mindmap({
         map_name: map_name,
         html: html,
@@ -52,12 +53,11 @@ router.get('/mindmap/open', ensureAuthenticated, async (req, res) => {
         user: req.session.passport.user
     }, function (err, result) {
         mindmaps = result;
-    });
-    // console.log(mindmaps);
+    }).select('-html');
 
     res.render('mindmapopen', {
         mindmaps: mindmaps
-    });
+    }); 
 })
 
 router.get('/mindmap/:id', ensureAuthenticated, async (req, res) => {
