@@ -1,5 +1,16 @@
-<% mindmaps.forEach(function(mindmap){ %>
-<a href="/mindmap/<%=mindmap._id%>">
-    <p><%=mindmap.map_name%></p> <br>
-</a>
-<% }); %>
+<div class="card" style="width: 18rem;">
+    <% mindmaps.forEach(function(mindmap){ %>
+    <h5 class="card-title text-center">
+        <a href="/mindmap/<%=mindmap._id%>">
+            <p><%=mindmap.map_name%></p>
+        </a>
+    </h5>
+    <%}); %>
+</div>
+<style>
+    .card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+</style>

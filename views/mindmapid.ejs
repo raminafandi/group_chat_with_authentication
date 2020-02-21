@@ -1,99 +1,68 @@
 <div class="col text-left">
-    <button onclick=save() class="btn btn-primary">Save</button>
-    <button onclick=openFile() class="btn btn-primary">Open</button>
+    <button onclick=save() class="btn btn-primary">Save</button> 
 </div>
-<form id="form" method="POST" style="display: none;" class="form-inline">
-    <div class="form-group mx-sm-3 mb-2">
-        <input type="text" class="form-control" required placeholder="Name for saving the file" name="map_name">
-        <input style="display: none;" type="text" class="form-control" id="code" name="html">
-        <input type="submit" class="btn btn-danger" value="Save">
+<form id="form"  method="POST" style="display: none;" class="form-inline">
+    <!-- <input type="hidden" name="_method" value="PUT"> -->
+            <div class="form-group mx-sm-3 mb-2">
+    <input style="display: none;" type="text" class="form-control" id="code" name="html">
+     <input type="submit" class="btn btn-danger" value="Save">
     </div>
 </form>
 
 
-<div class="mindmap"></div>
-<script>
-    let unique = 1;
+<div id="mindmapid" class="mindmap">
 
+</div>
+<script>
     let res = '<%=mindmapwithID.html%>';
     res = unescape(res);
-
-
     console.log(res);
     document.getElementsByClassName('mindmap')[0].innerHTML = res;
+    $(function () {
+        $('.mindmap').mindmap();
+    });
 
-
-    function addCss() {
-        // Get HTML head element 
-        var head = document.getElementsByTagName('HEAD')[0];
-
-        // Create new link Element 
-        var link = document.createElement('link');
-
-        // set the attributes for link element  
-        link.rel = 'stylesheet';
-
-        link.type = 'text/css';
-
-        link.href = '/src/mindmap.css';
-
-        // Append link element to HTML head 
-        head.appendChild(link);
-    }
-    addCss();
-
+    let unique = 1000;
     function addRightNode() {
-        document.getElementById("right").innerHTML += '<li id=' + unique +
-            'd class="children__item"><div class="node"><div  class="node__text">New Idea</div><input type="text" class="node__input"></div><button onclick=addRight(this)><i class="fa fa-plus"></i></button><ol id=' +
-            unique + ' class="children"></ol></li>';
-        unique++;
+        document.getElementById("right").innerHTML += '<li id=' + unique + 'd class="children__item"><button id="minusbutton" onclick=deleteNode(this)><i class="fa fa-minus"></i></button><div class="node"><div spellcheck="false" contenteditable="true" class="single-line other">New Idea</div></div><button onclick=addRight(this)><i class="fa fa-plus"></i></button><ol id=' + unique + ' class="children"></ol></li>';
+        unique=unique+2;
     }
 
     function addRight(elem) {
         var id = $(elem).parent().attr("id");
         id = id.slice(0, -1);
-        document.getElementById(id).innerHTML += '<li id=' + unique +
-            'd class="children__item"><div  class="node"><div class="node__text">New Idea</div><input type="text" class="node__input"></div><button onclick=addRight(this)><i class="fa fa-plus"></i></button><ol id=' +
-            unique + ' class="children"></ol></li>';
-        unique++;
+        document.getElementById(id).innerHTML += '<li id=' + unique + 'd class="children__item"><button id="minusbutton" onclick=deleteNode(this)><i class="fa fa-minus"></i></button>  <div  class="node"><div spellcheck="false" contenteditable="true" class="single-line other">New Idea</div></div><button onclick=addRight(this)><i class="fa fa-plus"></i></button><ol id=' + unique + ' class="children"></ol></li>';
+        unique=unique+2;
     }
 
-    let unique2 = 100;
-
+    let unique2 = 10000;
     function addLeftNode() {
-        document.getElementById("left").innerHTML += '<li id=' + unique2 +
-            'd class="children__item"><div  class="node"><div class="node__text">New Idea</div><input type="text" class="node__input"></div><button onclick=addLeft(this)><i class="fa fa-plus"></i></button><ol id=' +
-            unique2 + ' class="children"></ol></li>';
-        unique2++;
+        document.getElementById("left").innerHTML += '<li id=' + unique2 + 'd class="children__item"><button id="minusbutton" onclick=deleteNode(this)><i class="fa fa-minus"></i></button><div  class="node"><div spellcheck="false" contenteditable="true" class="single-line other">New Idea</div></div><button onclick=addLeft(this)><i class="fa fa-plus"></i></button><ol id=' + unique2 + ' class="children"></ol></li>';
+        unique2=unique2+2;
     }
 
     function addLeft(elem) {
         var id = $(elem).parent().attr("id");
         id = id.slice(0, -1);
-        document.getElementById(id).innerHTML += '<li id=' + unique2 +
-            'd class="children__item"><div  class="node"><div  class="node__text">New Idea</div><input type="text" class="node__input"></div><button onclick=addLeft(this)><i class="fa fa-plus"></i></button><ol id=' +
-            unique2 + ' class="children"></ol></li>';
-        unique2++;
+        document.getElementById(id).innerHTML += '<li id=' + unique2 + 'd class="children__item"><button id="minusbutton" onclick=deleteNode(this)><i class="fa fa-minus"></i></button><div  class="node"><div spellcheck="false" contenteditable="true" class="single-line other">New Idea</div></div><button onclick=addLeft(this)><i class="fa fa-plus"></i></button><ol id=' + unique2 + ' class="children"></ol></li>';
+        unique2=unique2+2;
     }
-
-    function deleteNode() {
-        alert("delete");
+    function deleteNode(elem) {
+        var id = $(elem).parent().attr("id");
+        document.getElementById(id).remove();
     }
-
+    //Save and Open-----------------------------------------------
     function save() {
-        document.getElementById("form2").style = "display:none";
+        // document.getElementById("form2").style = "display:none";
         document.getElementById("form").style = "display:block";
         let myHtml = document.getElementsByClassName("mindmap")[0].innerHTML;
-
-        console.log(myHtml);
         document.getElementById('code').value = myHtml;
     }
-
     function openFile() {
         document.getElementById("form").style = "display:none";
         document.getElementById("form2").style = "display:block";
     }
-
+    //-----------------------------------------------------------
     function toHTML(myLink) {
         var newString;
         newString = myLink.split("+").join(" ");
@@ -103,4 +72,12 @@
         newString = newString.split("%29").join(")");
         return newString;
     }
+
+    $("div[contenteditable]").keypress(function (evt) {
+
+        var keycode = evt.charCode || evt.keyCode;
+        if (keycode == 13) {
+            return false;
+        }
+    });
 </script>

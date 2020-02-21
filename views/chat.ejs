@@ -4,7 +4,7 @@
 
   <div id="chat-window">
     <div id="chatroom">
-      <div class="oldchats">
+      <div id="chatroominside" class="oldchats">
         <% oldChats.forEach(function(messageBlock){ %>
         <p><strong> <%=messageBlock.username%> : </strong><%= messageBlock.message%></p>
         <% }); %>
@@ -20,34 +20,49 @@
   </section>
 </div>
 <script>
-  window.onload = function () {
-    var objDiv = document.getElementById("chatroom");
-    objDiv.scrollTop = objDiv.scrollHeight;
-  }
+
+const scrollBottomHandler = () => {
+  let height = document.getElementById("chatroom").clientHeight;
+    document.getElementById("chat-window").scroll({
+  top: height,
+  left: 0
+});
+}
+window.onload = scrollBottomHandler
+
   //Make connection
   var socket = io.connect('http://localhost:5000/');
 
   //Query DOM
-
   var message = document.getElementById('message');
   var handle = document.getElementById('handle');
   var btn = document.getElementById('send');
   var output = document.getElementById('output');
   var feedback = document.getElementById('feedback');
   var username = '<%= name %>';
-
   //Emit events
+
+  //Buraaa ramin pox da yiyemmedi elvine yalvardi ayagina dusdu ki sen olennerivin cani ge bu poxa yeee dur
   btn.addEventListener('click', () => {
-    socket.emit('chat', {
+    if(message.value){
+      socket.emit('chat', {
       message: message.value,
       username: username
-    });
-    message.value = "";
-  });
+    },
+    setTimeout(() => {
+      scrollBottomHandler()
+      message.value = ""
+
+        },800)  
+    )
+  }
+})
+   
 
   message.addEventListener('keypress', () => {
     socket.emit('typing', username);
   });
+ 
 
   //Listen for events
   socket.on('chat', data => {
