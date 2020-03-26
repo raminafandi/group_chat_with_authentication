@@ -1,5 +1,7 @@
 <div class="container">
     <div class="row">
+        <%- include('partials/messages') %>
+
         <div class="col-sm">
             <a href="/mindmap" class="image1link">
                 <div id="image1"></div>
@@ -9,7 +11,7 @@
         </div>
         <div class="col-sm">
             <a href="/chat">
-<div id="image2"></div>
+                <div id="image2"></div>
                 <div class="textmap">Chat with your mates</div>
             </a>
 
@@ -17,7 +19,8 @@
     </div>
 </div>
 <style>
-    #image1,#image2 {
+    #image1,
+    #image2 {
         position: relative;
         height: 65vh;
         width: 100%;
@@ -27,47 +30,50 @@
         background-color: blueviolet;
     }
 
-    #image1{
+    #image1 {
         background-image: url("./images/1.png");
 
-    }   
-     #image2{
+    }
+
+    #image2 {
         background-image: url("./images/3.png");
 
     }
 
-    
-
-#image1::after, #image2::after{
-    content: "";
-    position: absolute;
-    height: 100vh;
-    width: 50px;
-    transform-origin: center;
-    transform: rotate(30deg) translateY(-40vh) translateX(-40vh);
-
-    background: rgba(255, 255, 255, 0.13);
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0.13) 77%,
-    rgba(255, 255, 255, 0.5) 92%,
-    rgba(255, 255, 255, 0.0) 100%
-  );}
-
-#image1:hover::after, #image2:hover::after{
-animation: mati 0.5s ease 0s;
-}
 
 
-@keyframes mati {
-    0%{
+    #image1::after,
+    #image2::after {
+        content: "";
+        position: absolute;
+        height: 100vh;
+        width: 50px;
+        transform-origin: center;
         transform: rotate(30deg) translateY(-40vh) translateX(-40vh);
+
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(to right,
+                rgba(255, 255, 255, 0.13) 0%,
+                rgba(255, 255, 255, 0.13) 77%,
+                rgba(255, 255, 255, 0.5) 92%,
+                rgba(255, 255, 255, 0.0) 100%);
     }
-    100%{
-        transform: rotate(30deg) translateY(-40vh) translateX(70vh);
+
+    #image1:hover::after,
+    #image2:hover::after {
+        animation: mati 0.5s ease 0s;
     }
-}
+
+
+    @keyframes mati {
+        0% {
+            transform: rotate(30deg) translateY(-40vh) translateX(-40vh);
+        }
+
+        100% {
+            transform: rotate(30deg) translateY(-40vh) translateX(70vh);
+        }
+    }
 
 
 

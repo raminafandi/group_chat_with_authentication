@@ -20,18 +20,17 @@
   </section>
 </div>
 <script>
-
-const scrollBottomHandler = () => {
-  let height = document.getElementById("chatroom").clientHeight;
+  const scrollBottomHandler = () => {
+    let height = document.getElementById("chatroom").clientHeight;
     document.getElementById("chat-window").scroll({
-  top: height,
-  left: 0
-});
-}
-window.onload = scrollBottomHandler
+      top: height,
+      left: 0
+    });
+  }
+  window.onload = scrollBottomHandler
 
   //Make connection
-  var socket = io.connect('http://localhost:5000/');
+  var socket = io.connect('https://mind-map-app-with-chat.herokuapp.com/');
 
   //Query DOM
   var message = document.getElementById('message');
@@ -40,29 +39,31 @@ window.onload = scrollBottomHandler
   var output = document.getElementById('output');
   var feedback = document.getElementById('feedback');
   var username = '<%= name %>';
+  var chatroom = document.getElementById('chatroom');
   //Emit events
 
-  //Buraaa ramin pox da yiyemmedi elvine yalvardi ayagina dusdu ki sen olennerivin cani ge bu poxa yeee dur
   btn.addEventListener('click', () => {
-    if(message.value){
+    if (message.value) {
       socket.emit('chat', {
-      message: message.value,
-      username: username
-    },
-    setTimeout(() => {
-      scrollBottomHandler()
-      message.value = ""
+          message: message.value,
+          username: username
+        },
+        setTimeout(() => {
+          scrollBottomHandler()
+          message.value = ""
 
-        },800)  
-    )
-  }
-})
-   
+        }, 800)
+      )
+    }
+  })
+
+
+
 
   message.addEventListener('keypress', () => {
     socket.emit('typing', username);
   });
- 
+
 
   //Listen for events
   socket.on('chat', data => {

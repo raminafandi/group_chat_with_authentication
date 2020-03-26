@@ -53,18 +53,6 @@
                 switch(key) {
 
                     case 13:
-                        if (!node.hasClass(params.editableClass)) {
-                            if (node.hasClass(params.rootClass)) {
-                                return;
-                            }
-                            methods.addNode();
-                        }
-                        else {
-                            methods.blur();
-                            methods.setActive(node);
-
-                            return false;
-                        }
                         break;
 
                     case 9:
